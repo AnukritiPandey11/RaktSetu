@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Droplet,
   ShieldCheck,
   TrendingDown,
   ArrowRightLeft,
@@ -34,8 +33,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <header className="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-blood-700 to-blood-500 shadow-lg shadow-blood-600/30">
-              <Droplet className="w-6 h-6 fill-white" />
+            <div className="flex items-center justify-center w-11 h-11 rounded-2xl overflow-hidden shadow-lg shadow-blood-600/30 bg-white border border-slate-700 shrink-0">
+              <img src="/raktsetu-logo.jpeg" alt="RaktSetu Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-2">

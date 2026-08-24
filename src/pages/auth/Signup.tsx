@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Droplet, User, Mail, Phone, MapPin, Lock, Shield, Building2, HeartPulse, UserCheck, ArrowRight } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Lock, Shield, Building2, HeartPulse, UserCheck, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../services/authContext';
 import { UserRole, BloodGroup } from '../../types';
 import { OtpVerification } from './OtpVerification';
@@ -64,8 +64,8 @@ export const Signup: React.FC<SignupProps> = ({ onGoToLogin, onGoToLanding }) =>
       <div className="sm:mx-auto sm:w-full sm:max-w-xl relative z-10">
         <div className="flex justify-center cursor-pointer" onClick={onGoToLanding}>
           <div className="flex items-center gap-2.5">
-            <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blood-700 to-blood-500 text-white shadow-xl shadow-blood-600/30">
-              <Droplet className="w-7 h-7 fill-white" />
+            <div className="flex items-center justify-center w-12 h-12 rounded-2xl overflow-hidden shadow-xl shadow-blood-600/30 bg-white border border-slate-700 shrink-0">
+              <img src="/raktsetu-logo.jpeg" alt="RaktSetu Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">

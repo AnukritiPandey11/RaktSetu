@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Droplet,
   LogOut,
   Shield,
   Building2,
@@ -44,8 +43,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateTab }) => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-blood-700 to-blood-500 text-white shadow-md shadow-blood-500/20">
-              <Droplet className="w-6 h-6 fill-white" />
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl overflow-hidden shadow-md shadow-blood-500/20 bg-white border border-slate-200 shrink-0">
+              <img src="/raktsetu-logo.jpeg" alt="RaktSetu Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">

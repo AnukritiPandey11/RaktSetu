@@ -7,9 +7,10 @@ import { OtpVerification } from './OtpVerification';
 interface SignupProps {
   onGoToLogin: () => void;
   onGoToLanding: () => void;
+  onSignupSuccess?: (role: UserRole) => void;
 }
 
-export const Signup: React.FC<SignupProps> = ({ onGoToLogin, onGoToLanding }) => {
+export const Signup: React.FC<SignupProps> = ({ onGoToLogin, onGoToLanding, onSignupSuccess }) => {
   const { signup } = useAuth();
   const [role, setRole] = useState<UserRole>('donor');
   const [name, setName] = useState('');
@@ -31,7 +32,7 @@ export const Signup: React.FC<SignupProps> = ({ onGoToLogin, onGoToLanding }) =>
   };
 
   const finalizeSignup = () => {
-    signup({
+    const created = signup({
       name,
       role,
       email,
@@ -40,6 +41,9 @@ export const Signup: React.FC<SignupProps> = ({ onGoToLogin, onGoToLanding }) =>
       password,
       blood_group: role === 'donor' ? bloodGroup : undefined
     });
+    if (onSignupSuccess) {
+      onSignupSuccess(created.role);
+    }
   };
 
   if (showOtp) {

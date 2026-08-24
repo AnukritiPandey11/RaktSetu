@@ -3,13 +3,16 @@ import { Lock, Mail, ArrowRight, Shield, Building2, HeartPulse, UserCheck, Spark
 import { useAuth } from '../../services/authContext';
 import { UserRole } from '../../types';
 
+import { dbUsers } from '../../services/db';
+
 interface LoginProps {
   onGoToSignup: () => void;
   onGoToLanding: () => void;
+  onLoginSuccess?: (role: UserRole) => void;
   defaultRole?: UserRole;
 }
 
-export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, defaultRole }) => {
+export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, onLoginSuccess, defaultRole }) => {
   const { login, loginAsRole } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +26,12 @@ export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, defau
       return;
     }
     const success = login(email, password);
-    if (!success) {
+    if (success) {
+      const found = dbUsers.getByEmail(email);
+      if (onLoginSuccess && found) {
+        onLoginSuccess(found.role);
+      }
+    } else {
       setError('Invalid credentials. You can use password "demo123" or use the 1-Click Role Login below.');
     }
   };
@@ -114,7 +122,10 @@ export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, defau
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => loginAsRole('admin')}
+                onClick={() => {
+                  loginAsRole('admin');
+                  if (onLoginSuccess) onLoginSuccess('admin');
+                }}
                 className="flex items-center gap-2 p-2 rounded-xl bg-slate-900 hover:bg-slate-700/80 border border-slate-700 text-left transition-all text-xs font-medium text-purple-300"
               >
                 <Shield className="w-4 h-4 text-purple-400 shrink-0" />
@@ -126,7 +137,10 @@ export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, defau
 
               <button
                 type="button"
-                onClick={() => loginAsRole('blood_bank')}
+                onClick={() => {
+                  loginAsRole('blood_bank');
+                  if (onLoginSuccess) onLoginSuccess('blood_bank');
+                }}
                 className="flex items-center gap-2 p-2 rounded-xl bg-slate-900 hover:bg-slate-700/80 border border-slate-700 text-left transition-all text-xs font-medium text-rose-300"
               >
                 <Building2 className="w-4 h-4 text-rose-400 shrink-0" />
@@ -138,7 +152,10 @@ export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, defau
 
               <button
                 type="button"
-                onClick={() => loginAsRole('hospital')}
+                onClick={() => {
+                  loginAsRole('hospital');
+                  if (onLoginSuccess) onLoginSuccess('hospital');
+                }}
                 className="flex items-center gap-2 p-2 rounded-xl bg-slate-900 hover:bg-slate-700/80 border border-slate-700 text-left transition-all text-xs font-medium text-sky-300"
               >
                 <HeartPulse className="w-4 h-4 text-sky-400 shrink-0" />
@@ -150,7 +167,10 @@ export const Login: React.FC<LoginProps> = ({ onGoToSignup, onGoToLanding, defau
 
               <button
                 type="button"
-                onClick={() => loginAsRole('donor')}
+                onClick={() => {
+                  loginAsRole('donor');
+                  if (onLoginSuccess) onLoginSuccess('donor');
+                }}
                 className="flex items-center gap-2 p-2 rounded-xl bg-slate-900 hover:bg-slate-700/80 border border-slate-700 text-left transition-all text-xs font-medium text-emerald-300"
               >
                 <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />

@@ -15,9 +15,17 @@ import { initDatabase } from '../../services/db';
 
 interface NavbarProps {
   onNavigateTab?: (tab: string) => void;
+  onNavigateHome?: () => void;
+  onRoleChange?: (role: UserRole) => void;
+  onLogout?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavigateTab }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onNavigateTab,
+  onNavigateHome,
+  onRoleChange,
+  onLogout
+}) => {
   const { user, logout, loginAsRole } = useAuth();
 
   const roleMeta: Record<UserRole, { label: string; icon: any; color: string }> = {
@@ -42,7 +50,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateTab }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => {
+              if (onNavigateHome) onNavigateHome();
+              else if (onNavigateTab) onNavigateTab('overview');
+            }}
+          >
             <div className="flex items-center justify-center w-10 h-10 rounded-xl overflow-hidden shadow-md shadow-blood-500/20 bg-white border border-slate-200 shrink-0">
               <img src="/raktsetu-logo.jpeg" alt="RaktSetu Logo" className="w-full h-full object-cover" />
             </div>
@@ -75,7 +89,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateTab }) => {
               return (
                 <button
                   key={r}
-                  onClick={() => loginAsRole(r)}
+                  onClick={() => {
+                    if (onRoleChange) onRoleChange(r);
+                    else loginAsRole(r);
+                  }}
                   className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-all ${
                     active
                       ? 'bg-white text-blood-700 shadow-sm border border-slate-200'
@@ -121,7 +138,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateTab }) => {
                 </div>
 
                 <button
-                  onClick={logout}
+                  onClick={() => {
+                    if (onLogout) onLogout();
+                    else logout();
+                  }}
                   title="Logout"
                   className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
                 >
